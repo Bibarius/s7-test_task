@@ -1,0 +1,19 @@
+version: '3.7'
+
+services: 
+  mockservice:
+    build: ./mockservice
+    expose:  
+      - '5000'
+    restart: on-failure:3
+
+  api:
+    build: ./api
+    ports:
+      - 0.0.0.0:8000:8000
+    depends_on: 
+      - mockservice
+
+    restart: on-failure:3
+    links:
+      - mockservice
